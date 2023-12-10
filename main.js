@@ -45,26 +45,35 @@ useSegmentationCheck.addEventListener('change', function () {
 Form Handler For Segmentation & Classification
 */
 const segmentationForm = document.getElementById('segmentationForm');
+const classificationForm = document.getElementById('classificationForm');
 segmentationForm.addEventListener('submit', function (event) {
   event.preventDefault(); // Prevent the default form submission
-
-  // Call your function to handle the API request here
   segmentationApiRequest();
 });
+
+classificationForm.addEventListener('submit', function (event) {
+  event.preventDefault(); // Prevent the default form submission
+  classificationRequest();
+});
+
 
 /*
 Classification & Segmentation API Request
 */
 function classificationRequest() {
   const apiUrl = 'https://ravindrawiguna-classification-coagulation.hf.space/upload';
+  const formData = new FormData(classificationForm);
   fetch(apiUrl, {
     method: 'POST',
-    body: new FormData(segmentationForm),
+    body: formData,
   })
   .then(response => response.json())
   .then(data => {
-      console.log('API Response:', data);
+      // console.log('API Response:', data);
+      // alert(data['prediction']);
       // Handle the response as needed
+      let classificationResult = document.getElementById('classificationResult');
+      classificationResult.innerHTML = data['prediction'];
   })
   .catch(error => {
       console.error('Error:', error);
