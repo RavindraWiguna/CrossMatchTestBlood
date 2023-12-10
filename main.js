@@ -48,7 +48,7 @@ const segmentationForm = document.getElementById('segmentationForm');
 const classificationForm = document.getElementById('classificationForm');
 segmentationForm.addEventListener('submit', function (event) {
   event.preventDefault(); // Prevent the default form submission
-  segmentationApiRequest();
+  segmentationRequest();
 });
 
 classificationForm.addEventListener('submit', function (event) {
@@ -69,8 +69,6 @@ function classificationRequest() {
   })
   .then(response => response.json())
   .then(data => {
-      // console.log('API Response:', data);
-      // alert(data['prediction']);
       // Handle the response as needed
       let classificationResult = document.getElementById('classificationResult');
       classificationResult.innerHTML = data['prediction'];
@@ -78,6 +76,28 @@ function classificationRequest() {
   .catch(error => {
       console.error('Error:', error);
       // Handle errors
+      alert('Error:', error);
+  });
+
+}
+
+function segmentationRequest() {
+  const apiUrl = 'https://januarevan-crossmatch-segmentation.hf.space/segmentation';
+  const formData = new FormData(segmentationForm);
+  fetch(apiUrl, {
+    method: 'POST',
+    body: formData,
+  })
+  .then(response => response.json())
+  .then(data => {
+      // Handle the response as needed
+      let classificationResult = document.getElementById('classificationResult');
+      classificationResult.innerHTML = data['prediction'];
+  })
+  .catch(error => {
+      console.error('Error:', error);
+      // Handle errors
+      alert('Error:', error);
   });
 
 }
