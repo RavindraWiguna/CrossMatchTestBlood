@@ -91,6 +91,28 @@ function classificationRequest() {
 
 }
 
+function base64toBlob(base64Data, contentType) {
+  contentType = contentType || '';
+  var sliceSize = 1024;
+  var byteCharacters = atob(base64Data);
+  var bytesLength = byteCharacters.length;
+  var slicesCount = Math.ceil(bytesLength / sliceSize);
+  var byteArrays = new Array(slicesCount);
+
+  for (var sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
+      var begin = sliceIndex * sliceSize;
+      var end = Math.min(begin + sliceSize, bytesLength);
+
+      var bytes = new Array(end - begin);
+      for (var offset = begin, i = 0; offset < end; ++i, ++offset) {
+          bytes[i] = byteCharacters[offset].charCodeAt(0);
+      }
+      byteArrays[sliceIndex] = new Uint8Array(bytes);
+  }
+  return new Blob(byteArrays, { type: contentType });
+}
+
+
 function segmentationRequest() {
   const apiUrl = 'https://januarevan-crossmatch-segmentation.hf.space/segmentation';
   const formData = new FormData(segmentationForm);
@@ -102,7 +124,13 @@ function segmentationRequest() {
   .then(data => {
       // Handle the response as needed
       let imgToBeClassified = document.getElementById('imgToBeClassified');
-      imgToBeClassified.value = data['result'];
+      let base64str = 'data:image/png;base64,' + data['image'];
+      let container = new DataTransfer();
+      let blob = base64toBlob(data['image'], 'image/png');
+      let file = new File([blob], "img.jpg",{type:"image/jpeg", lastModified:new Date().getTime()});
+      container.items.add(file);
+      imgToBeClassified.files = container.files;
+      setImgPreview(file, imgToBeClassifiedPreview);
   })
   .catch(error => {
       console.error('Error:', error);
