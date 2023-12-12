@@ -71,7 +71,9 @@ function classificationRequest() {
   .then(data => {
       // Handle the response as needed
       let classificationResult = document.getElementById('classificationResult');
+      let classificationProbability = document.getElementById('classificationProbability');
       classificationResult.innerHTML = data['prediction'];
+      classificationProbability.innerHTML = data['probability'];
   })
   .catch(error => {
       console.error('Error:', error);
