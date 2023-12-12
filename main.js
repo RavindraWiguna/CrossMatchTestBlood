@@ -91,8 +91,8 @@ function segmentationRequest() {
   .then(response => response.json())
   .then(data => {
       // Handle the response as needed
-      let classificationResult = document.getElementById('classificationResult');
-      classificationResult.innerHTML = data['prediction'];
+      let imgToBeClassified = document.getElementById('imgToBeClassified');
+      imgToBeClassified.value = data['result'];
   })
   .catch(error => {
       console.error('Error:', error);
