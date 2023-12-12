@@ -73,7 +73,15 @@ function classificationRequest() {
       let classificationResult = document.getElementById('classificationResult');
       let classificationProbability = document.getElementById('classificationProbability');
       classificationResult.innerHTML = data['prediction'];
-      classificationProbability.innerHTML = data['probability'];
+      // now add un ordered list for the probability
+      classificationProbability.innerHTML = '';
+      let probabilityList = document.createElement('ul');
+      for (const [key, value] of Object.entries(data['probability'])) {
+        let probabilityListItem = document.createElement('li');
+        probabilityListItem.innerHTML = `${key}: ${value}`;
+        probabilityList.appendChild(probabilityListItem);
+      }
+      classificationProbability.appendChild(probabilityList);
   })
   .catch(error => {
       console.error('Error:', error);
