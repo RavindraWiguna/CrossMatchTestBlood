@@ -30,16 +30,16 @@ imgToBeClassified.addEventListener('change', function () {
 /*
 Tiny itsy bitsy teeny weeny checkbox classification based on segmentation
 */
-const useSegmentationCheck = document.getElementById('useSegmentationCheck');
-useSegmentationCheck.addEventListener('change', function () {
-  // if checked then disable the classification input
-  classificationInputField = document.getElementById('classificationInputField');
-  if(this.checked){
-    classificationInputField.disabled = true;
-  } else {
-    classificationInputField.disabled = false;
-  }
-});
+// const useSegmentationCheck = document.getElementById('useSegmentationCheck');
+// useSegmentationCheck.addEventListener('change', function () {
+//   // if checked then disable the classification input
+//   classificationInputField = document.getElementById('classificationInputField');
+//   if(this.checked){
+//     classificationInputField.disabled = true;
+//   } else {
+//     classificationInputField.disabled = false;
+//   }
+// });
 
 /*
 Form Handler For Segmentation & Classification
